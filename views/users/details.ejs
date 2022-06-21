@@ -12,32 +12,25 @@
           <ul class="list-group list-group-flush text-center">
             <li
               class="list-group-item text-white"
-              style="background-color: <%= user.personalColor %>"
+              style="background-color: <%= profile.personalColor %>"
             >
-              <%= user.firstName %> <%= user.lastName %>
+              <%= profile.firstName %> <%= profile.lastName %>
             </li>
-            <li class="list-group-item"><%= user.bio %></li>
-            <li class="list-group-item"><%= user.province %></li>
-            <li class="list-group-item"><%= user.city %></li>
+            <li class="list-group-item"><%= profile.bio %></li>
+            <li class="list-group-item"><%= profile.province %></li>
+            <li class="list-group-item"><%= profile.city %></li>
             <li class="list-group-item">
               <img
-                src="../dist/img/<% if (user.petCategory == 'cat'){ %>cat<% } else { %>dog<% } %>-icon.png"
+                src="../dist/img/<% if (profile.petCategory == 'cat'){ %>cat<% } else { %>dog<% } %>-icon.png"
                 alt="huisdier icon"
               />
             </li>
           </ul>
-          <a class="delete btn btn-danger mt-3" data-doc="<%= user._id %>"
+          <a class="delete btn btn-danger mt-3" data-doc="<%= profile._id %>"
             >delete</a
           >
         </div>
       </section>
-      <!-- TODO Werkt nog niet voegt extra document toe in plaats van update -->
-
-      <!-- <section class="row d-flex justify-content-center py-4">
-        <div class="col-8">
-          <%- include('form-update'); %>
-        </div>
-      </section> -->
     </main>
 
     <script>

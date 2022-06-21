@@ -30,7 +30,7 @@ function getWeather() {
         let temp = data.main.temp;
         temperature.innerHTML = temp + "° C";
         location.innerHTML =
-          data.name + " (" + latitude + "°, " + longitude + "°)";
+          data.name;
       });
   }
 

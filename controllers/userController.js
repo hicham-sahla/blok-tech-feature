@@ -1,12 +1,12 @@
-const User = require("../models/User");
+const Profile = require("../models/User");
 
 const user_index = (req, res) => {
-  User.find()
+  Profile.find()
     .sort({ createdAt: -1 })
     .then((result) => {
       res.render("users/index", {
         title: "Bekijk gebruikers in je buurt",
-        users: result,
+        profiles: result,
       });
     })
     .catch((err) => {
@@ -16,9 +16,9 @@ const user_index = (req, res) => {
 
 const user_details = (req, res) => {
   const id = req.params.id;
-  User.findById(id)
+  Profile.findById(id)
     .then((result) => {
-      res.render("users/details", { user: result, title: "Gebruiker details" });
+      res.render("users/details", { profile: result, title: "Gebruiker details" });
     })
     .catch((err) => {
       res.status(404).render("pages/404", { title: "Gebruiker niet gevonden" });
@@ -32,9 +32,9 @@ const user_create_get = (req, res) => {
 };
 
 const user_create_post = (req, res) => {
-  const user = new User(req.body);
+  const profile = new Profile(req.body);
 
-  user
+  profile
     .save()
     .then((result) => {
       res.redirect("/users");
@@ -47,7 +47,7 @@ const user_create_post = (req, res) => {
 const user_delete = (req, res) => {
   const id = req.params.id;
 
-  User.findByIdAndDelete(id)
+  Profile.findByIdAndDelete(id)
     .then((result) => {
       res.json({ redirect: "/users" });
     })

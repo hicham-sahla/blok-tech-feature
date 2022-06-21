@@ -8,29 +8,32 @@
 
     <main>
       <section class="text-center">
+        <noscript>
+          <a class="weatherwidget-io" target="_blank" href="https://forecast7.com/en/52d374d90/amsterdam/" data-label_1="AMSTERDAM" data-label_2="WEATHER" data-theme="original" >Bekijk het weer in Amsterdam</a>
+        </noscript>
         <p id="temperature"></p>
         <p id="location"></p>
       </section>
 
       <section class="row d-flex justify-content-center">
-        <% if (users.length > 0) { %> <% users.forEach(user => { %>
+        <% if (profiles.length > 0) { %> <% profiles.forEach(profile => { %>
 
         <article class="col-3 m-3 box card text-center shadow p-3">
           <div
             class="card-header"
-            style="background-color: <%= user.personalColor %>"
+            style="background-color: <%= profile.personalColor %>"
           >
             <img
-              src="../dist/img/<% if (user.petCategory == 'cat'){ %>cat<% } else { %>dog<% } %>-icon.png"
+              src="../dist/img/<% if (profile.petCategory == 'cat'){ %>cat<% } else { %>dog<% } %>-icon.png"
               alt="huisdier icon"
             />
           </div>
           <div class="card-body">
             <h5 class="card-title">
-              <%= user.firstName %> <%= user.lastName %>
+              <%= profile.firstName %> <%= profile.lastName %>
             </h5>
-            <p class="card-text"><%= user.bio %></p>
-            <a href="/users/<%= user._id %> " class="btn btn-primary"
+            <p class="card-text"><%= profile.bio %></p>
+            <a href="/users/<%= profile._id %> " class="btn btn-primary"
               >Bekijk profiel</a
             >
           </div>
