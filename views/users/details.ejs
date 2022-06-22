@@ -12,21 +12,21 @@
           <ul class="list-group list-group-flush text-center">
             <li
               class="list-group-item text-white"
-              style="background-color: <%= profile.personalColor %>"
+              style="background-color: <%= user.personalColor %>"
             >
-              <%= profile.firstName %> <%= profile.lastName %>
+              <%= user.username %>
             </li>
-            <li class="list-group-item"><%= profile.bio %></li>
-            <li class="list-group-item"><%= profile.province %></li>
-            <li class="list-group-item"><%= profile.city %></li>
+            <li class="list-group-item"><%= user.bio %></li>
+            <li class="list-group-item"><%= user.city %></li>
+            <li class="list-group-item"><a href="mailto:<%= user.email %>"><%= user.email %></a></li>
             <li class="list-group-item">
               <img
-                src="../dist/img/<% if (profile.petCategory == 'cat'){ %>cat<% } else { %>dog<% } %>-icon.png"
+                src="../dist/img/<% if (user.petCategory == 'cat'){ %>cat<% } else { %>dog<% } %>-icon.png"
                 alt="huisdier icon"
               />
             </li>
           </ul>
-          <a class="delete btn btn-danger mt-3" data-doc="<%= profile._id %>"
+          <a class="delete btn btn-danger mt-3" data-doc="<%= user._id %>"
             >delete</a
           >
         </div>

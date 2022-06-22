@@ -84,19 +84,17 @@
         </div>
         <div class="bio error text-info"></div>
       </fieldset>
-      <!-- <fieldset>
-        <select
-        class="form-select my-4"
-        aria-label="Default select"
-        id="petCategory"
-        name="petCategory"
-      >
-        <option value="" selected>Selecteer je huisdier categorie</option>
-        <option value="cat">Kat</option>
-        <option value="dog">Hond</option>
-      </select>
-      </fieldset> -->
-      <div class="petCategory error text-info"></div>
+      <fieldset>
+        <h3>Wat voor huisdier heb je?</h3>
+        <label>
+          <input type="radio" name="petCategory" value="cat" />
+          <img src="../dist/img/cat.png" alt="Kat categorie" />
+        </label>
+        <label>
+          <input type="radio" name="petCategory" value="dog" />
+          <img src="../dist/img/dog.png" alt="Hond categorie" />
+        </label>
+      </fieldset>
       <fieldset class="d-grid">
         <button class="btn btn-primary">Sign up</button>
       </fieldset>
@@ -119,7 +117,6 @@
   const personalColorError = document.querySelector('.personalColor.error');
   const cityError = document.querySelector('.city.error');
   const bioError = document.querySelector('.bio.error');
-  // const petCategory = document.querySelector('.petCategory.error');
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     // reset errors
@@ -137,12 +134,13 @@
     const birthDate = form.birthDate.value;
     const personalColor = form.personalColor.value;
     const city = form.city.value;
-    const bio = form.email.value;
+    const bio = form.bio.value;
+    const petCategory = form.petCategory.value;
 
     try {
       const res = await fetch('/signup', { 
         method: 'POST', 
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, username, birthDate, personalColor, city, bio, petCategory}),
         headers: {'Content-Type': 'application/json'}
       });
 
@@ -150,14 +148,14 @@
       if (data.errors) {
         emailError.textContent = data.errors.email;
         passwordError.textContent = data.errors.password;
-        // usernameError.textContent = data.errors.username;
-        // birthDateError.textContent = data.errors.birthDate;
-        // personalColorError.textContent = data.errors.personalColor;
-        // cityError.textContent = data.errors.city;
-        // bioError.textContent = data.errors.bio;
+        usernameError.textContent = data.errors.username;
+        birthDateError.textContent = data.errors.birthDate;
+        personalColorError.textContent = data.errors.personalColor;
+        cityError.textContent = data.errors.city;
+        bioError.textContent = data.errors.bio;
       }
       if (data.user) {
-        location.assign('/');
+        location.assign('/users');
       }
     }
     catch (err) {

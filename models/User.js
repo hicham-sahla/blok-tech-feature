@@ -37,10 +37,10 @@ const userSchema = new mongoose.Schema({
     required: [true, "Tell me something about yourself"],
     minlength: [20, "Tell me more about yourself dont forget something"],
   },
-  // petCategory: {
-  //   type: String,
-  //   required: [true, "Please tell me what pet u got"],
-  // },
+  petCategory: {
+    type: String,
+    required: [true, "Please tell me what pet u got"],
+  },
 });
 
 // fire a function before doc saved to db
