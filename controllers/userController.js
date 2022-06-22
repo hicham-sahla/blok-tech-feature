@@ -1,12 +1,12 @@
-const Profile = require("../models/User");
+const User = require("../models/User");
 
 const user_index = (req, res) => {
-  Profile.find()
+  User.find()
     .sort({ createdAt: -1 })
     .then((result) => {
       res.render("users/index", {
         title: "Bekijk gebruikers in je buurt",
-        profiles: result,
+        users: result,
       });
     })
     .catch((err) => {
@@ -16,9 +16,9 @@ const user_index = (req, res) => {
 
 const user_details = (req, res) => {
   const id = req.params.id;
-  Profile.findById(id)
+  User.findById(id)
     .then((result) => {
-      res.render("users/details", { profile: result, title: "Gebruiker details" });
+      res.render("users/details", { user: result, title: "Gebruiker details" });
     })
     .catch((err) => {
       res.status(404).render("pages/404", { title: "Gebruiker niet gevonden" });
@@ -31,23 +31,11 @@ const user_create_get = (req, res) => {
   });
 };
 
-const user_create_post = (req, res) => {
-  const profile = new Profile(req.body);
-
-  profile
-    .save()
-    .then((result) => {
-      res.redirect("/users");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-};
 
 const user_delete = (req, res) => {
   const id = req.params.id;
 
-  Profile.findByIdAndDelete(id)
+  User.findByIdAndDelete(id)
     .then((result) => {
       res.json({ redirect: "/users" });
     })
@@ -55,22 +43,9 @@ const user_delete = (req, res) => {
       console.log(err);
     });
 };
-// const user_update = (req, res) => {
-
-//   User.findOneAndUpdate()
-//     .then((result) => {
-//       res.redirect("/users");
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
 
 module.exports = {
   user_index,
   user_details,
-  user_create_get,
-  user_create_post,
   user_delete,
-  // user_update,
 };
