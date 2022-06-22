@@ -1,2 +1,6 @@
-<a href="javascript:history.back()" class="text-left my-4 btn btn-info">Ga terug</a>
-<h1 class="text-center my-4"><%= title %> </h1>
+<a href="javascript:history.back()" class="text-left btn btn-outline-primary mt-4"
+  >Ga terug</a
+>
+<% if (user) { %>
+<a class="logout btn btn-info mt-4" href="/logout">Log out</a>
+<% } %>

@@ -16,28 +16,30 @@
       </section>
 
       <section class="row d-flex justify-content-center">
-        <% if (profiles.length > 0) { %> <% profiles.forEach(profile => { %>
+        <% if (users.length > 0) { %> <% users.forEach(user => { %>
 
         <article class="col-3 m-3 box card text-center shadow p-3">
           <div
             class="card-header"
-            style="background-color: <%= profile.personalColor %>"
+            style="background-color: <%= user.personalColor %>"
           >
             <img
-              src="../dist/img/<% if (profile.petCategory == 'cat'){ %>cat<% } else { %>dog<% } %>-icon.png"
+              src="../dist/img/<% if (user.petCategory == 'cat'){ %>cat<% } else { %>dog<% } %>-icon.png"
               alt="huisdier icon"
             />
           </div>
           <div class="card-body">
             <h5 class="card-title">
-              <%= profile.firstName %> <%= profile.lastName %>
+             <%= user.username %>
             </h5>
-            <p class="card-text"><%= profile.bio %></p>
-            <a href="/users/<%= profile._id %> " class="btn btn-primary"
+            <h6><%= user.city %></h6>
+            <p class="card-text"><%= user.bio %></p>
+            <a href="/users/<%= user._id %> " class="btn btn-primary"
               >Bekijk profiel</a
             >
           </div>
-          <div class="card-footer text-muted">2 days ago</div>
+          <div class="card-footer text-muted"><a href="mailto:<%= user.email %>">neem contact op</a>
+          </div>
         </article>
         <% }); %> <% } else { %>
 
@@ -46,7 +48,6 @@
         <% } %>
       </section>
     </main>
-
     <footer><%- include('../partials/footer'); %></footer>
     <script src="/dist/js/weatherapi.js"></script>
   </body>

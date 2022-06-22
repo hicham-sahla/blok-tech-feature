@@ -4,15 +4,22 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const path = require("path");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
+const { checkUser } = require("./middleware/authMiddleware");
 const connectDB = require("./config/dbConn");
-const userRoutes = require("./routes/userRoutes");
 
 // Connect to MongoDB
 connectDB();
 
+// Defining routes
+const userRoutes = require("./routes/userRoutes");
+const authRoutes = require("./routes/authRoutes");
+
 // middleware & static files
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
 app.use("/css",express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
 app.use(
   "/js",
@@ -21,8 +28,11 @@ app.use(
 
 // set the view engine to ejs
 app.set("view engine", "ejs");
+app.get("*", checkUser);
+app.get("/", (req, res) => res.render("pages/home"));
 
 // user routes
+app.use(authRoutes);
 app.use(userRoutes);
 
 // 404 page

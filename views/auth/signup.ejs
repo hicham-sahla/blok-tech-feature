@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body class="container" id="users-index">
+    <header><%- include('../partials/header'); %></header>
+    <main class="row d-flex justify-content-center">
+      <section class="col-sm-8 py-4">
+        <form action="/signup">
+          <fieldset>
+            <div class="form-floating mb-3">
+              <input type="text" name="email" class="form-control" />
+              <label for="email">Email</label>
+              <div class="email error text-info"></div>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" name="password" class="form-control" />
+              <label for="password">Password</label>
+              <div class="password error text-info"></div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <h2>Vertel ons wat meer over je zelf</h2>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                name="username"
+                placeholder="Voornaam"
+              />
+              <label for="username">Username</label>
+              <div class="username error text-info"></div>
+            </div>
+            <label for="birthDate" class="mt-3 mb-2">Geboortedatum</label>
+            <input
+              id="birthDate"
+              class="form-control"
+              type="date"
+              name="birthDate"
+            />
+            <div class="birthDate error text-info"></div>
+          </fieldset>
+
+          <fieldset>
+            <label id="personalColorLabel" for="personalColor" class="mx-3"
+              >Wat is je favoriete kleur?</label
+            >
+            <noscript>
+              <input
+                type="color"
+                id="personalColor"
+                name="personalColor"
+                value="#6246ea"
+              />
+            </noscript>
+            <div class="personalColor error text-info"></div>
+          </fieldset>
+          <fieldset>
+            <select
+              class="form-select"
+              aria-label="Default select"
+              id="cities"
+              name="city"
+            >
+              <option value="" selected>Selecteer je woonplaats</option>
+            </select>
+            <div class="city error text-info"></div>
+          </fieldset>
+          <fieldset>
+            <h3>Vertel wat meer over je zelf</h3>
+            <div class="form-floating">
+              <textarea
+                rows="4"
+                class="form-control"
+                placeholder="Vertel wat over je passies of interesses"
+                id="passion"
+                name="bio"
+              ></textarea>
+              <label for="passion">Je passie</label>
+            </div>
+            <div class="bio error text-info"></div>
+          </fieldset>
+          <fieldset>
+            <h3>Wat voor huisdier heb je?</h3>
+            <label>
+              <input type="radio" name="petCategory" value="cat" />
+              <img src="../dist/img/cat.png" alt="Kat categorie" />
+            </label>
+            <label>
+              <input type="radio" name="petCategory" value="dog" />
+              <img src="../dist/img/dog.png" alt="Hond categorie" />
+            </label>
+          </fieldset>
+          <fieldset class="d-grid">
+            <button class="btn btn-primary">Sign up</button>
+          </fieldset>
+        </form>
+      </section>
+    </main>
+
+    <footer><%- include('../partials/footer'); %></footer>
+    <script src="/dist/js/cityapi.js"></script>
+
+    <script src="/dist/js/scripts.js"></script>
+    <script>
+      const form = document.querySelector("form");
+      const emailError = document.querySelector(".email.error");
+      const passwordError = document.querySelector(".password.error");
+      const usernameError = document.querySelector(".username.error");
+      const birthDateError = document.querySelector(".birthDate.error");
+      const personalColorError = document.querySelector(".personalColor.error");
+      const cityError = document.querySelector(".city.error");
+      const bioError = document.querySelector(".bio.error");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        // reset errors
+        emailError.textContent = "";
+        passwordError.textContent = "";
+        usernameError.textContent = "";
+        birthDateError.textContent = "";
+        personalColorError.textContent = "";
+        cityError.textContent = "";
+        bioError.textContent = "";
+        // get values
+        const email = form.email.value;
+        const password = form.password.value;
+        const username = form.username.value;
+        const birthDate = form.birthDate.value;
+        const personalColor = form.personalColor.value;
+        const city = form.city.value;
+        const bio = form.bio.value;
+        const petCategory = form.petCategory.value;
+
+        try {
+          const res = await fetch("/signup", {
+            method: "POST",
+            body: JSON.stringify({
+              email,
+              password,
+              username,
+              birthDate,
+              personalColor,
+              city,
+              bio,
+              petCategory,
+            }),
+            headers: { "Content-Type": "application/json" },
+          });
+
+          const data = await res.json();
+          if (data.errors) {
+            emailError.textContent = data.errors.email;
+            passwordError.textContent = data.errors.password;
+            usernameError.textContent = data.errors.username;
+            birthDateError.textContent = data.errors.birthDate;
+            personalColorError.textContent = data.errors.personalColor;
+            cityError.textContent = data.errors.city;
+            bioError.textContent = data.errors.bio;
+          }
+          if (data.user) {
+            location.assign("/users");
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      });
+    </script>
+  </body>
+</html>
